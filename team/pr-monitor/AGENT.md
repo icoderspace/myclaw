@@ -30,7 +30,7 @@ PR 是否 **Urgent**（优先级最高，盖过年龄）：
 | **Fresh** | 普通 PR，age 0–4 天 | 不动 |
 | **Warn** | 普通 PR，age 5–27 天 | 每天 @ 作者催 check-in |
 | **Ultimatum** | 普通 PR，age 28–29 天 | **最后通牒**：@ 作者，明确告知"30 天将自动 abandon"。**不**改 PR 状态、**不**标 Draft。 |
-| **Abandon** | age ≥ 30 天 | 先 POST comment 说明，再 PATCH `status=abandoned`。**无豁免**（approved 也照关）。 |
+| **Abandon** | age ≥ 30 天 | **当前只通知不关**（`PR_MONITOR_NO_ABANDON=1` 默认开）。文案提醒作者自己 merge / abandon。Hao 在测评作者反馈后才会打开真 abandon。 |
 
 > 年龄按自然日（UTC `now - creationDate`，向下取整）。
 

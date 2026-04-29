@@ -34,6 +34,8 @@ STATE_FILE = SCRIPT_DIR / "state.json"
 RUNS_DIR = SCRIPT_DIR / "runs"
 
 DRY_RUN = os.environ.get("PR_MONITOR_DRY_RUN", "1") != "0"
+# Notify-only mode: do not call ADO abandon API. Default ON (Hao 2026-04-29).
+NO_ABANDON = os.environ.get("PR_MONITOR_NO_ABANDON", "1") != "0"
 
 # ---------- helpers ----------
 def http(method, url, *, headers=None, body=None, timeout=30):
@@ -61,6 +63,24 @@ def fetch_active_prs():
     if code != 200:
         raise RuntimeError(f"ADO PR list failed: {code} {text[:300]}")
     return json.loads(text).get("value", [])
+
+def fetch_pr_detail(pr_id):
+    """Fetch a single PR; needed because list endpoint omits lastMergeCommit.author.date."""
+    url = f"{ADO_BASE}/pullrequests/{pr_id}?api-version=7.1"
+    code, text = http("GET", url, headers=ado_auth())
+    if code != 200:
+        return None
+    return json.loads(text)
+
+def last_activity_iso(pr):
+    """Best signal for 'last author activity':
+    lastMergeCommit.author.date is recomputed on every source-branch push,
+    so it tracks real activity. Fall back to creationDate."""
+    lmc = pr.get("lastMergeCommit") or {}
+    a = (lmc.get("author") or {}).get("date")
+    if a:
+        return a
+    return pr.get("creationDate")
 
 def fetch_members():
     url = f"{BOT_BASE}/api/references/{urllib.parse.quote(TARGET_CONV_ID)}/members"
@@ -113,7 +133,8 @@ def age_days(creation_iso, now):
 def bucket_pr(pr, now):
     title = pr.get("title", "") or ""
     author = (pr.get("createdBy") or {}).get("displayName", "") or ""
-    age = age_days(pr["creationDate"], now)
+    # Age = days since last author activity (push), not since PR creation.
+    age = age_days(last_activity_iso(pr), now)
     urgent = is_dependabot(author) or is_security_title(title)
 
     if urgent and age >= 30:
@@ -154,7 +175,7 @@ def render_card(buckets, mention_index, today_str):
         f"Urgent **{len(buckets['urgent'])}**  ·  "
         f"Ultimatum **{len(buckets['ultimatum'])}**  ·  "
         f"Warn **{len(buckets['warn'])}**  ·  "
-        f"Abandon (today) **{len(buckets['abandon'])}**  ·  "
+        f"Stale ≥30d **{len(buckets['abandon'])}**  ·  "
         f"Fresh {len(buckets['fresh'])}"
     )
     body.append({"type": "TextBlock", "text": counts, "wrap": True, "spacing": "Small"})
@@ -206,7 +227,7 @@ def render_card(buckets, mention_index, today_str):
                 urgent_tag = " ⚠️" if e.get("urgent") else ""
                 tag = ""
                 if kind == "abandon":
-                    tag = "  ·  _will be abandoned today_"
+                    tag = "  ·  _stale ≥30d — please merge or abandon_"
                 elif kind == "ultimatum":
                     tag = "  ·  _last warning — abandon at 30d_"
                 lines.append(
@@ -218,7 +239,7 @@ def render_card(buckets, mention_index, today_str):
     section("🚨 Urgent (Dependabot / [SECURITY]) — please merge within 5 days", buckets["urgent"], "urgent")
     section("⛔ Ultimatum (28–29d) — abandon at 30d if not merged", buckets["ultimatum"], "ultimatum")
     section("⏰ Warn (5–27d) — please check in", buckets["warn"], "warn")
-    section("🗑️ Abandoned today (≥30d)", buckets["abandon"], "abandon")
+    section("🗑️ Stale ≥30d — please merge or abandon yourself", buckets["abandon"], "abandon")
 
     card = {
         "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
@@ -306,12 +327,17 @@ def main():
     log_lines = [
         f"# PR Monitor Run · {today_str} (UTC {now.strftime('%H:%M')})",
         f"",
-        f"DRY_RUN = `{DRY_RUN}`",
+        f"DRY_RUN = `{DRY_RUN}`  ·  NO_ABANDON = `{NO_ABANDON}`",
         f"",
     ]
 
     # 1. fetch
     prs = fetch_active_prs()
+    # Enrich with lastMergeCommit.author.date (per-PR detail call).
+    for i, pr in enumerate(prs):
+        detail = fetch_pr_detail(pr["pullRequestId"])
+        if detail and detail.get("lastMergeCommit"):
+            pr["lastMergeCommit"] = detail["lastMergeCommit"]
     members = fetch_members()
     midx = build_member_index(members)
 
@@ -339,19 +365,20 @@ def main():
         f"| Urgent | {len(buckets['urgent'])} |\n"
         f"| Ultimatum (28–29d) | {len(buckets['ultimatum'])} |\n"
         f"| Warn (5–27d) | {len(buckets['warn'])} |\n"
-        f"| Abandon today (≥30d) | {len(buckets['abandon'])} |\n"
+        f"| Stale ≥30d (notify only) | {len(buckets['abandon'])} |\n"
         f"| Fresh (0–4d) | {len(buckets['fresh'])} |\n"
     )
 
     # 4. render activity
     activity, unmatched = render_card(buckets, midx, today_str)
 
-    # 5. abandon (only if not dry-run)
+    # 5. abandon (currently disabled by NO_ABANDON; notify-only mode)
     abandon_results = []
     for entry in buckets["abandon"]:
         pr = entry["pr"]
-        if DRY_RUN:
-            abandon_results.append((pr["pullRequestId"], "DRY_RUN: would abandon"))
+        if NO_ABANDON or DRY_RUN:
+            why = "NO_ABANDON" if NO_ABANDON else "DRY_RUN"
+            abandon_results.append((pr["pullRequestId"], f"{why}: notify only, no abandon"))
         else:
             try:
                 (c1, _), (c2, t2) = ado_abandon(pr["pullRequestId"])
