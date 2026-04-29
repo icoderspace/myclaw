@@ -1,68 +1,71 @@
 # PR Monitor Agent
 
-每天检查 Messaging-Connectors 仓库的 active PR，提醒滞留作者，关闭超期僵尸 PR。
+每天检查 Messaging-Connectors 仓库的 active PR，按规则催作者、必要时直接 abandon。
 
-**这不是开发组的 4 个角色之一**。它是个独立的运维自动化 agent，由 cron 定时触发，跑完即退。
+**不是开发组 4 个角色之一**，是独立的运维自动化 agent。由 OpenClaw cron 触发，跑完即退。
 
 ## 触发
 
 | 触发器 | 时间 | 实现 |
 |---|---|---|
-| 每天检查 | 09:00 Asia/Shanghai = 01:00 UTC | OpenClaw cron (`agentTurn` to isolated session) |
+| 每天检查 | **09:00 Asia/Shanghai = 01:00 UTC** | OpenClaw cron (`agentTurn` → isolated session, 或直接 shell exec) |
 
-## 输入
+## 数据源
 
-无（自取数据）：
-- ADO PAT: `~/.openclaw/secrets/ado-pat`
-- Org: `msdata`
-- Project: `Messaging Connectors and Event Streams`
-- Repo: `Messaging-Connectors`
+- **ADO**: `https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_apis/git/repositories/Messaging-Connectors/pullrequests`
+- **PAT**: `~/.openclaw/secrets/ado-pat`（workspace 外，不入 git）
+- **Teams Bot**: `https://icm-notification-bot.azurewebsites.net/api/activity`（公网，无 auth gate）
+- **目标 channel**: `[Connector]PR Push and review`
+  - conversationId: `19:785512bc64f946e9b9062b90f176e314@thread.tacv2`
 
-## 阈值
+## 分桶规则
 
-| 桶 | 年龄（自然日） | 动作 |
+PR 是否 **Urgent**（优先级最高，盖过年龄）：
+- 作者是 **`Dependabot`** / `dependabot[bot]`，**或**
+- 标题包含 `[SECURITY]`（不区分大小写）
+
+| 桶 | 触发条件 | 动作 |
 |---|---|---|
-| Fresh | 0–4 天 | 不动 |
-| Warn | **5–29 天** | 发 Teams 提醒，@ author 催 check-in |
-| Stale | **≥30 天** | **直接 abandon**（ADO 上没有"close"，对应状态是 `abandoned`），并在 PR 上留一条 comment 解释 |
+| **Urgent** | 上述 Urgent 标记，**无论 age** | 当天就 @ 作者，要求 5d 内 merge；未 merge 持续每天 @；age ≥30 触发 Abandon |
+| **Fresh** | 普通 PR，age 0–4 天 | 不动 |
+| **Warn** | 普通 PR，age 5–27 天 | 每天 @ 作者催 check-in |
+| **Ultimatum** | 普通 PR，age 28–29 天 | **最后通牒**：@ 作者，明确告知"30 天将自动 abandon"。**不**改 PR 状态、**不**标 Draft。 |
+| **Abandon** | age ≥ 30 天 | 先 POST comment 说明，再 PATCH `status=abandoned`。**无豁免**（approved 也照关）。 |
 
-## 数据流
+> 年龄按自然日（UTC `now - creationDate`，向下取整）。
 
-```
-1. GET /pullrequests?status=active&top=200
-   → 拿到全部 active PR
-2. 对每个 PR 计算 age = now - creationDate
-3. 分桶：fresh / warn / stale
-4. 对 warn 桶：
-     - 渲染 Teams Adaptive Card（一条聚合消息，分组按 author）
-     - POST 到 Teams webhook
-5. 对 stale 桶（每个 PR 独立）：
-     - POST comment: "This PR has been inactive for {age} days; closed automatically by PR Monitor. Reopen or recreate if still relevant."
-     - PATCH /pullRequests/{id}  body { "status": "abandoned" }
-6. 写报告 team/pr-monitor/runs/<YYYY-MM-DD>.md
-7. 失败 → escalate 到 Claw（system event）
-```
+## 推送策略（一条主消息 / 天）
+
+- 每天 09:00 BJT 跑一次。
+- **先 `messageDelete` 昨天的主消息**（state 文件里存了昨天的 `activityId`），再 POST 今天的新消息。
+- 一条 Adaptive Card，按桶分段（Urgent → Ultimatum → Warn → Abandon-result），每条 PR 列：作者 @、age、标题、ADO 链接。
+- @mention 用 Teams members list 里的 `29:xxx` userId 匹配 ADO 作者 displayName（不区分大小写、忽略括号后缀如 "(Accenture)"）。匹配不到的作者就在文本里写纯文字 `@AuthorName`（不带 entity），并在报告里标注。
+- 失败回滚：`messageDelete` 失败不阻塞 POST；POST 失败的话保留昨天的 state 不动。
 
 ## 红线
 
-- **绝不**对自己（PAT owner）创建的 PR 触发 abandon —— 防止把 Hao 自己的 PR 干掉。
-- **dry-run mode**：环境变量 `PR_MONITOR_DRY_RUN=1` 时，只渲染消息和报告，不发 Teams、不 abandon。**首跑必须 dry-run**，让 Hao 看一次再切真跑。
-- 失败重试：单条 PR 操作失败不阻塞其他，但要在报告里列出。
-- 时区：年龄按 UTC 算（避免跨时区歧义），呈现给人时换 Beijing 时间。
-- "AI PR" 标记的 PR 同样适用规则（很多是自动化产生的，更应该被清理）。
+- **绝不**对 PAT owner 自己创建的 PR 触发 abandon（保险绳；防误关）。
+- **DRY_RUN 默认开**（`PR_MONITOR_DRY_RUN=1`）：只渲染消息 + 写报告，不调 Teams API、不 abandon。**首次真跑前 Hao 必须看过一次预览**。
+- 单条 PR 操作失败不阻塞其它；报告里列失败项。
+- 失败 / 异常 → 失败时由 cron `failureAlert` ping 主会话。
 
 ## 输出
 
-每次运行产出 `team/pr-monitor/runs/<YYYY-MM-DD>.md`：
-- 总览：fresh/warn/stale 计数
-- warn 列表（带 author / 年龄 / 标题 / 链接）
-- stale 列表 + 实际执行结果（abandoned ✓ / failed ✗）
-- 异常 / 跳过项
+`team/pr-monitor/runs/<YYYY-MM-DD>.md`：
+- 总览（每桶计数）
+- 各桶 PR 明细 + 实际执行结果
+- 作者匹配失败列表
+- HTTP 错误列表
 
-跑完简短结果由 cron 的 `delivery: announce` 直接发给 Hao（webchat），失败时 ping 主会话。
+`team/pr-monitor/state.json`：
+- `lastActivityId`：昨天主消息的 ID（用于次日删除）
+- `lastConversationId`：目标 conversation
+- `lastRunUtc`：上次跑的时间
 
-## 配置缺口（首跑前要补）
+## 文件
 
-- [ ] Teams Incoming Webhook URL（暂无 → 现在用 mock，跑出文本/卡片样子给 Hao 看）
-- [ ] 是否需要 PR 作者 Teams 用户 ID 映射（@ 提及精准送达）？还是按邮箱即可？
-- [ ] 阈值是否照搬"5 天 / 30 天"，还是想区分工作日？
+- `AGENT.md` — 本文件
+- `run.py` — 主脚本
+- `state.json` — 跨天状态（首次跑前不存在）
+- `runs/<date>.md` — 每天的运行报告
+- `SAMPLE-run-*.md` — 历史样例（参考）

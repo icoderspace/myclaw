@@ -1,0 +1,243 @@
+{
+  "conversationId": "19:785512bc64f946e9b9062b90f176e314@thread.tacv2",
+  "activity": {
+    "type": "message",
+    "attachments": [
+      {
+        "contentType": "application/vnd.microsoft.card.adaptive",
+        "content": {
+          "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+          "type": "AdaptiveCard",
+          "version": "1.5",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "\ud83d\udccb PR Daily Pulse \u00b7 2026-04-29",
+              "weight": "Bolder",
+              "size": "Large",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Urgent **1**  \u00b7  Ultimatum **1**  \u00b7  Warn **14**  \u00b7  Abandon (today) **5**  \u00b7  Fresh 11",
+              "wrap": true,
+              "spacing": "Small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "\ud83d\udea8 Urgent (Dependabot / [SECURITY]) \u2014 please merge within 5 days",
+              "weight": "Bolder",
+              "size": "Medium",
+              "spacing": "Medium",
+              "separator": true,
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**Dependabot** \u2014 1 PR(s)\n- [#2054393](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2054393)  `12d` \u26a0\ufe0f  [SECURITY] Bump System.Security.Cryptography.Xml from 8.0.2 to 8.0.3",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "\u26d4 Ultimatum (28\u201329d) \u2014 abandon at 30d if not merged",
+              "weight": "Bolder",
+              "size": "Medium",
+              "spacing": "Medium",
+              "separator": true,
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Nikita Kokitkar</at>** \u2014 1 PR(s)\n- [#2023903](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2023903)  `29d`  [AI][PR] DCF: Happy path tip test for DCF connector  \u00b7  _last warning \u2014 abandon at 30d_",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "\u23f0 Warn (5\u201327d) \u2014 please check in",
+              "weight": "Bolder",
+              "size": "Medium",
+              "spacing": "Medium",
+              "separator": true,
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Tangqian Hong</at>** \u2014 1 PR(s)\n- [#2065332](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2065332)  `5d`  Fix Dataverse V2 connector reactor isolation and add diagnostics",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Nikita Kokitkar</at>** \u2014 1 PR(s)\n- [#2064752](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2064752)  `5d`  [AI][PR]-Mongodb Sanitize password from logs",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Shengzhi Na (Accenture International Limited)</at>** \u2014 1 PR(s)\n- [#2061487](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2061487)  `7d`  Updated tiptest buildout configs for Fairfax env",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Weisa Kong (FESCO Adecco Human Resources)</at>** \u2014 1 PR(s)\n- [#2061450](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2061450)  `7d`  [AI PR] RTI Copilot: MI storage auth + group chat assistant bot-side",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Leander Mathisen</at>** \u2014 2 PR(s)\n- [#2060991](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2060991)  `7d`  Add SampleData capacity-capped cluster logic\n- [#2048765](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2048765)  `14d`  [AI PR] Migrate SampleData connectors to capacity-capped clusters",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Wanyong Song</at>** \u2014 2 PR(s)\n- [#2059664](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2059664)  `7d`  [AI PR] feat: add mTLS support to Solace connector control plane\n- [#2058963](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2058963)  `8d`  [AI PR] feat: add mTLS and SSL properties to Solace connector codegen config",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**Prathamesh Govekar** \u2014 1 PR(s)\n- [#2059409](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2059409)  `8d`  feat: Add AvroBinary source data format support",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Junfei Wang (Accenture International Limited)</at>** \u2014 1 PR(s)\n- [#2056768](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2056768)  `9d`  [AI PR] Enable managed Prometheus on dedicated (custom-connector) AKS clusters",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Zhengyi Zhao</at>** \u2014 2 PR(s)\n- [#2050005](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2050005)  `13d`  [AI PR] feat: add Execute SQL Statement Geneva Action\n- [#2040191](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2040191)  `20d`  [AI PR] Remove ContractsV2 folder and move LocalizedErrorNumber to Common",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Qiang Li (Accenture International Limited)</at>** \u2014 1 PR(s)\n- [#2039843](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2039843)  `20d`  Add DatasourceTestingSdk and test project",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Abhineet Garg</at>** \u2014 1 PR(s)\n- [#2034780](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2034780)  `22d`  [AI PR] Redesign branch-aware versioning with clean 3-phase resolve-version.ps1",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "\ud83d\uddd1\ufe0f Abandoned today (\u226530d)",
+              "weight": "Bolder",
+              "size": "Medium",
+              "spacing": "Medium",
+              "separator": true,
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>zhipeng zhou (Accenture International Limited)</at>** \u2014 1 PR(s)\n- [#2022547](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2022547)  `30d`  [AI PR] Switch Solace and CosmosDB to enhanced connector class names  \u00b7  _will be abandoned today_",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Nikita Kokitkar</at>** \u2014 2 PR(s)\n- [#2019259](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2019259)  `33d`  DCF: Upgrade Delta library  \u00b7  _will be abandoned today_\n- [#2018529](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2018529)  `33d`  [AI PR] Add dotnet sidecar cluster type with Docker image and control plane sup\u2026  \u00b7  _will be abandoned today_",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Abhineet Garg</at>** \u2014 1 PR(s)\n- [#2010735](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2010735)  `38d`  [AI PR] Fix nightly TipTests build: disable SdkAnalyzers  \u00b7  _will be abandoned today_",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "**<at>Junfei Wang (Accenture International Limited)</at>** \u2014 1 PR(s)\n- [#2004348](https://dev.azure.com/msdata/Messaging%20Connectors%20and%20Event%20Streams/_git/Messaging-Connectors/pullrequest/2004348)  `42d`  [AI PR] Fix DiagnosticContext propagation for metrics and logging  \u00b7  _will be abandoned today_",
+              "wrap": true
+            }
+          ]
+        }
+      }
+    ],
+    "text": "PR Daily Pulse \u2014 <at>Junfei Wang (Accenture International Limited)</at> <at>Weisa Kong (FESCO Adecco Human Resources)</at> <at>Qiang Li (Accenture International Limited)</at> <at>Abhineet Garg</at> <at>Nikita Kokitkar</at> <at>zhipeng zhou (Accenture International Limited)</at> <at>Zhengyi Zhao</at> <at>Wanyong Song</at> <at>Shengzhi Na (Accenture International Limited)</at> <at>Leander Mathisen</at> <at>Tangqian Hong</at>",
+    "entities": [
+      {
+        "type": "mention",
+        "text": "<at>Nikita Kokitkar</at>",
+        "mentioned": {
+          "id": "29:1obj3gApLToN_U-UQx4pyYQrbxhBft8X7wkdYUylDo4gIn4mnru_08wVnCNUw1yLbeIJk7GTTx8wX1XmLB8oTbg",
+          "name": "Nikita Kokitkar"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Tangqian Hong</at>",
+        "mentioned": {
+          "id": "29:1wa1BdgeoOlyVrAWaHqBy2yFNlqKWiGjckECz1C8OPmJxnbd83qBZ3B1aoZEdZ_iq8W1sqRh91wUsHE_mki1xDQ",
+          "name": "Tangqian Hong"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Shengzhi Na (Accenture International Limited)</at>",
+        "mentioned": {
+          "id": "29:1vvbLNehjAImtGLHQJz2se-x3Li55AVqT1D-TF8hgTcEf6mhIvNAv6IT7aq6Mu2APVvtSB0qpxcqxPpxEgrSF-Q",
+          "name": "Shengzhi Na (Accenture International Limited)"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Weisa Kong (FESCO Adecco Human Resources)</at>",
+        "mentioned": {
+          "id": "29:1G2l6AG2A3JNVMdD3xomUxJqFnrghmez0sc-nkxGHSv8_QMv72Ud_YpIjQZzMfCxptn3uTZUatorBEJ35tzo9NQ",
+          "name": "Weisa Kong (FESCO Adecco Human Resources)"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Leander Mathisen</at>",
+        "mentioned": {
+          "id": "29:10kdp_OW4Ytc9IQEnvi2Z8Zx4XE1RvmFxxT116ui--4pY4TX9JppN8Wer8Q1m6fwNkCMzjzM2n8V7J6KHsGtMOg",
+          "name": "Leander Mathisen"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Wanyong Song</at>",
+        "mentioned": {
+          "id": "29:1yKEuiGQqAJa7G19w-rU5-pXtEfsX0jE4PPKXe7qA8B-aLT1wCpoGJi5OjC9nS8NjBAFLduOF0Yz08cFkNumLww",
+          "name": "Wanyong Song"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Junfei Wang (Accenture International Limited)</at>",
+        "mentioned": {
+          "id": "29:1RUBVSCBboCIlyo655ibqRKvDcIALhzB3Lc9-9sG4dx8IRIJqHj37X6Wi1HaCdJkEi3dUvhGcr5UzvRW67YU4SA",
+          "name": "Junfei Wang (Accenture International Limited)"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Zhengyi Zhao</at>",
+        "mentioned": {
+          "id": "29:1kaMJXtEx9LKmoIzI_YhaR5gax0UkxdeUSjMotgR-tajS98KxiHHnB1yOPuDPvyRYy1az85kP5yqyH3XtW1aVlg",
+          "name": "Zhengyi Zhao"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Qiang Li (Accenture International Limited)</at>",
+        "mentioned": {
+          "id": "29:1QxSQ3enttggQ-TlVVXHG1Py5AD0YM6dTBR7GzwjP1xIvnoUL5ZOOX9AFB3z133j09yaUmw-TE58ZZgDTcgUYpA",
+          "name": "Qiang Li (Accenture International Limited)"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>Abhineet Garg</at>",
+        "mentioned": {
+          "id": "29:16i2t61lhtvrnhEUZC-JUXuzqsdv-ukXL5UnETU7-qtnORQ0y8AeY3vNaVdR2rR74qgfbheTbgM5ODTZRFjLRKw",
+          "name": "Abhineet Garg"
+        }
+      },
+      {
+        "type": "mention",
+        "text": "<at>zhipeng zhou (Accenture International Limited)</at>",
+        "mentioned": {
+          "id": "29:1Li1xXZA-BXdrXALMjBMwX7RgX-jsLlMIEqL1SItKZiOn1--yU1-xAXjW7AkKfoxH-V0XOFpBCpkLUtilfhQW2g",
+          "name": "zhipeng zhou (Accenture International Limited)"
+        }
+      }
+    ]
+  }
+}
