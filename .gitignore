@@ -1,0 +1,23 @@
+# OpenClaw runtime / state — not part of "me", just the engine's bookkeeping
+.openclaw/
+state/
+
+# Secrets — never commit these
+.env
+.env.*
+*.key
+*.pem
+secrets/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Logs / scratch
+*.log
+tmp/
+scratch/
