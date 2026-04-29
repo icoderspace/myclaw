@@ -2,6 +2,10 @@
 
 Hao 的开发团队，由 Claw（team lead）统一调度。Hao 不直接对接成员，所有沟通经过 Claw。
 
+## 项目章程
+
+**所有角色派活时必须先看** [PROJECT.md](PROJECT.md) — 这是从 `Messaging-Connectors/.github/copilot-instructions.md` 提炼出来的项目宪法（构建/规范/工作流/红线）。
+
 ## 编制
 
 | 角色 | 文件 | 一句话职责 |
