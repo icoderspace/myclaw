@@ -21,7 +21,9 @@
 
 跳过：
 - diff 超过 **10,000 行**（在报告里标记）
-- 只动文档 / yaml / `.gitignore` / `.gitattributes` 的 PR
+- 只动 `.gitignore` / `.gitattributes` / pure formatting 类不影响语义的 PR
+
+**文档 PR 不跳过**：TSG / runbook / `.github/instructions/` 等文档面向 AI/DRI 消费，质量必须入列。对文档 PR 使用专门的 `prompt-doc.md`（v0.2+ 提供），容器：歧义性 / 可执行性 / 错误与容易踩坍 / 与其它 TSG 的交叉引用。
 
 ## Review 5 项
 
