@@ -77,6 +77,7 @@
 
 ## 红线
 
+- **agent 永不投票**（任何情况）。Dependabot / `[SECURITY]` PR review 完后在 DM 里附 "⚡ 可 approve" 提醒，Hao 人工点票。
 - **DRY_RUN 默认开**（`PR_REVIEWER_DRY_RUN=1`）：只产报告，不调 LLM、不发 DM
 - **NO_PR_COMMENT 默认开**（第一周强制为 1）：不调 ADO PR comment API
 - 失败不阻塞其它 PR；报告里列异常
