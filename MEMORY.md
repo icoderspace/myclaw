@@ -5,10 +5,16 @@
 
 ## 关于 Hao
 
+- 全名：**Hao Ling**，ADO/公司 alias：**haling**
 - 北京时区 (UTC+8)，主用中文
 - 当前只在网页 webchat 对接（不接 WhatsApp/Telegram）
 - 喜欢直接、专业的沟通；反感堆砌话术、想当然
 - "知之为知之，不知为不知" 是基本要求
+
+## 关键同事 alias
+
+- **yanling** = Ling Yang（跟 Hao 不是同一人，完全不同的同事）
+- 以后遇到 SME / author 字段里的 alias不要当成 Hao
 
 ## 关于我（Claw）
 
