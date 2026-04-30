@@ -43,7 +43,7 @@
 ## Teams 渠道 (通过 RTI Copilot bot `https://icm-notification-bot.azurewebsites.net`)
 
 - **Hao DM (1:1)** — 只有 Hao 看得到，默认预览 / 堆东西都发这里：
-  `a:1ybI-9qx2WMN_JoCouIhiL9Ys44rIEvVCJfEIJPmllqLPgz4oCGKZZT71o0L5Lsr-RCjvf4HpsVL9tiwd6W6KMqORvDnLBXUPFxJDXajCGu15h6w-7Zz4sT54mAQBal5Y`
+  `a:1XGI0Hx62TGU6jJk1YAJWCh2dcE9OwsHlV2ZzVBFEfDOXmeviwJOGhlKH2oIskwt-obwY_yObvdQrzcMWh8mLCwdS8hxv1AP0JdFIptCWLIKRjlYEmppFj7EL2xNSaCR_`
 - **PR Daily Pulse group thread**（9 位 PR author + Hao）：
   `19:785512bc64f946e9b9062b90f176e314@thread.tacv2`
 - POST 格式：`POST {BOT}/api/activity` body `{conversationId, activity}`，无 auth gate。
