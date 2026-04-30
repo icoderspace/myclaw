@@ -8,6 +8,7 @@
 - 全名：**Hao Ling**，ADO/公司 alias：**haling**
 - 北京时区 (UTC+8)，主用中文
 - 当前只在网页 webchat 对接（不接 WhatsApp/Telegram）
+- **主动推送**：Hao 不一定经常刷网页，有事我主动往 webchat 发就行（PAT 到期、PR 异常、heartbeat 发现的事等）
 - 喜欢直接、专业的沟通；反感堆砌话术、想当然
 - "知之为知之，不知为不知" 是基本要求
 
