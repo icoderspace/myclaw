@@ -40,6 +40,14 @@
 - 业务：Azure 托管的 Kafka Connect connectors（Event Streams / KCaaS）
 - 技术栈：C#/.NET 8（Control Plane）+ Java 17（Runtime Plugin）+ Camel/Kafka forks + EV2 部署
 
+## Teams 渠道 (通过 RTI Copilot bot `https://icm-notification-bot.azurewebsites.net`)
+
+- **Hao DM (1:1)** — 只有 Hao 看得到，默认预览 / 堆东西都发这里：
+  `a:1ybI-9qx2WMN_JoCouIhiL9Ys44rIEvVCJfEIJPmllqLPgz4oCGKZZT71o0L5Lsr-RCjvf4HpsVL9tiwd6W6KMqORvDnLBXUPFxJDXajCGu15h6w-7Zz4sT54mAQBal5Y`
+- **PR Daily Pulse group thread**（9 位 PR author + Hao）：
+  `19:785512bc64f946e9b9062b90f176e314@thread.tacv2`
+- POST 格式：`POST {BOT}/api/activity` body `{conversationId, activity}`，无 auth gate。
+
 ## ADO 接入
 
 - **认证方式**：PAT（不是 UMI，UMI 走不通因为 org 只给 Stakeholder license）
